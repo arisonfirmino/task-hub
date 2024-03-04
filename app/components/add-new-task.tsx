@@ -1,0 +1,23 @@
+import { PlusIcon } from "lucide-react";
+
+export default function AddNewTask() {
+  return (
+    <form>
+      <div className="flex flex-col gap-2.5">
+        <input
+          type="text"
+          placeholder="Adicione uma nova tarefa"
+          className="rounded-xl border border-solid border-blue-500 p-2.5 outline-none"
+        />
+
+        <button
+          type="submit"
+          className="flex items-center gap-2 rounded-xl p-2.5 text-lg active:bg-gray-200"
+        >
+          <PlusIcon size={20} className="text-blue-500" />
+          Adicionar
+        </button>
+      </div>
+    </form>
+  );
+}
