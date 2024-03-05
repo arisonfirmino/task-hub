@@ -7,7 +7,7 @@ interface NavProps {
   setActiveFilter: (filter: string) => void;
 }
 
-export default function Nav({setActiveFilter}: NavProps) {
+export default function Nav({ setActiveFilter }: NavProps) {
   const navItems = [
     { text: "Tudo", icon: <LayoutGridIcon size={20} /> },
     { text: "Importante", icon: <AlertCircleIcon size={20} /> },

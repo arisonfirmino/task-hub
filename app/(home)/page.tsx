@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ListTodoIcon } from "lucide-react";
 import Search from "../components/search";
 import Nav from "../components/nav";
@@ -11,6 +11,7 @@ interface TaskType {
   id: string;
   content: string;
   important: boolean;
+  isTrashed: boolean;
 }
 
 export default function Home() {
@@ -28,43 +29,58 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    let updatedTasks = tasks;
+    let updatedTasks = tasks.filter((task) => !task.isTrashed);
     if (activeFilter === "Importante") {
-      updatedTasks = tasks.filter((task) => task.important);
+      updatedTasks = updatedTasks.filter((task) => task.important);
+    } else if (activeFilter === "Lixeira") {
+      updatedTasks = tasks.filter((task) => task.isTrashed);
     }
     setFilteredTasks(updatedTasks);
   }, [activeFilter, tasks]);
 
-  useEffect(() => {
-    let updatedTasks = tasks;
-    if (searchTerm) {
-      updatedTasks = tasks.filter((task) =>
-        task.content.toLowerCase().includes(searchTerm.toLowerCase()),
+  const addTask = useCallback(
+    (newTask: string) => {
+      const newId = Math.random().toString(36).substr(2, 9);
+      const updatedTasks = [
+        ...tasks,
+        { id: newId, content: newTask, important: false, isTrashed: false },
+      ];
+      setTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    },
+    [tasks],
+  );
+
+  const updateTask = useCallback(
+    (taskId: string, important: boolean, isTrashed: boolean) => {
+      const updatedTasks = tasks.map((task) =>
+        task.id === taskId ? { ...task, important, isTrashed } : task,
       );
-    }
-    setFilteredTasks(updatedTasks);
-  }, [searchTerm, tasks]);
+      setTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    },
+    [tasks],
+  );
 
-  const addTask = (newTask: string) => {
-    const newId = Math.random().toString(36).substr(2, 9);
-    const updatedTasks = [
-      ...tasks,
-      { id: newId, content: newTask, important: false },
-    ];
-    setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-  };
+  const restoreTask = useCallback(
+    (taskId: string) => {
+      const updatedTasks = tasks.map((task) =>
+        task.id === taskId ? { ...task, isTrashed: false } : task,
+      );
+      setTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    },
+    [tasks],
+  );
 
-  const updateTask = (taskId: string, important: boolean) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === taskId) {
-        return { ...task, important };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-  };
+  const deleteTask = useCallback(
+    (taskId: string) => {
+      const updatedTasks = tasks.filter((task) => task.id !== taskId);
+      setTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    },
+    [tasks],
+  );
 
   return (
     <main className="flex min-h-screen w-full">
@@ -92,7 +108,10 @@ export default function Home() {
               id={task.id}
               content={task.content}
               important={task.important}
+              isTrashed={task.isTrashed}
               updateTask={updateTask}
+              restoreTask={restoreTask}
+              deleteTask={deleteTask}
             />
           ))}
         </div>
