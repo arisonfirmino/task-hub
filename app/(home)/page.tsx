@@ -91,8 +91,8 @@ export default function Home() {
   );
 
   return (
-    <main className="flex min-h-screen w-full">
-      <section className="h-screen min-w-80 p-5 shadow-2xl">
+    <main className="flex min-h-screen w-full flex-col xl:flex-row">
+      <section className="w-full p-5 shadow-2xl xl:h-screen xl:min-w-80 xl:max-w-80">
         <div className="relative flex h-full flex-col gap-5">
           <div className="flex items-center gap-2 text-blue-500">
             <ListTodoIcon size={24} />
@@ -102,14 +102,14 @@ export default function Home() {
           <Search setSearchTerm={setSearchTerm} />
           <Nav setActiveFilter={setActiveFilter} />
 
-          <div className="absolute bottom-0 w-full">
+          <div className="bottom-0 w-full xl:absolute">
             <AddNewTask addTask={addTask} />
           </div>
         </div>
       </section>
 
       <section className="h-screen w-full overflow-auto">
-        <div className="grid w-full grid-cols-5 gap-5 p-5">
+        <div className="grid w-full grid-cols-2 gap-5 p-5 md:grid-cols-3 xl:grid-cols-5">
           {filteredTasks.map((task) => (
             <Task
               key={task.id}

@@ -16,7 +16,7 @@ export default function Nav({ setActiveFilter }: NavProps) {
   const [active, setActive] = useState("Tudo");
 
   return (
-    <nav className="flex flex-col gap-5">
+    <nav className="flex gap-5 xl:flex-col">
       {navItems.map((item) => (
         <button
           key={item.text}
@@ -24,10 +24,10 @@ export default function Nav({ setActiveFilter }: NavProps) {
             setActiveFilter(item.text);
             setActive(item.text);
           }}
-          className={`flex items-center gap-2 rounded-xl p-2.5 text-lg ${active === item.text ? "bg-gray-200 duration-500" : ""}`}
+          className={`flex h-10 w-10 items-center gap-2 rounded-xl p-2.5 text-lg xl:h-auto xl:w-auto ${active === item.text ? "bg-gray-200 duration-500" : ""}`}
         >
           <span className="text-blue-500">{item.icon}</span>
-          <span>{item.text}</span>
+          <span className="hidden xl:flex">{item.text}</span>
         </button>
       ))}
     </nav>
