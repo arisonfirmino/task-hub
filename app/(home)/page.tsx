@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ListTodoIcon } from "lucide-react";
 import Search from "../components/search";
 import Nav from "../components/nav";
@@ -15,9 +15,18 @@ interface TaskType {
 export default function Home() {
   const [tasks, setTasks] = useState<TaskType[]>([]);
 
+  useEffect(() => {
+    const storedTasks = localStorage.getItem("tasks");
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
+
   const addTask = (newTask: string) => {
     const newId = Math.random().toString(36).substr(2, 9);
-    setTasks([...tasks, { id: newId, content: newTask }]);
+    const updatedTasks = [...tasks, { id: newId, content: newTask }];
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
   return (
