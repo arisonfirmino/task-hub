@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { AlertCircleIcon, LayoutGridIcon, Trash2Icon } from "lucide-react";
 
-export default function Nav() {
+interface NavProps {
+  setActiveFilter: (filter: string) => void;
+}
+
+export default function Nav({setActiveFilter}: NavProps) {
   const navItems = [
     { text: "Tudo", icon: <LayoutGridIcon size={20} /> },
     { text: "Importante", icon: <AlertCircleIcon size={20} /> },
@@ -16,7 +20,10 @@ export default function Nav() {
       {navItems.map((item) => (
         <button
           key={item.text}
-          onClick={() => setActive(item.text)}
+          onClick={() => {
+            setActiveFilter(item.text);
+            setActive(item.text);
+          }}
           className={`flex items-center gap-2 rounded-xl p-2.5 text-lg ${active === item.text ? "bg-gray-200 duration-500" : ""}`}
         >
           <span className="text-blue-500">{item.icon}</span>

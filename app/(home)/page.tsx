@@ -10,21 +10,49 @@ import Task from "../components/task";
 interface TaskType {
   id: string;
   content: string;
+  important: boolean;
 }
 
 export default function Home() {
   const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
+  const [activeFilter, setActiveFilter] = useState("Tudo");
 
   useEffect(() => {
     const storedTasks = localStorage.getItem("tasks");
     if (storedTasks) {
-      setTasks(JSON.parse(storedTasks));
+      const parsedTasks: TaskType[] = JSON.parse(storedTasks);
+      setTasks(parsedTasks);
     }
   }, []);
 
+  useEffect(() => {
+    if (activeFilter === "Tudo") {
+      setFilteredTasks(tasks);
+    } else if (activeFilter === "Importante") {
+      const importantTasks = tasks.filter((task) => task.important);
+      setFilteredTasks(importantTasks);
+    } else if (activeFilter === "Lixeira") {
+    }
+  }, [activeFilter, tasks]);
+
   const addTask = (newTask: string) => {
     const newId = Math.random().toString(36).substr(2, 9);
-    const updatedTasks = [...tasks, { id: newId, content: newTask }];
+    const updatedTasks = [
+      ...tasks,
+      { id: newId, content: newTask, important: false },
+    ];
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
+
+  const updateTask = (taskId: string, important: boolean) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === taskId) {
+        return { ...task, important };
+      }
+      return task;
+    });
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
@@ -39,7 +67,7 @@ export default function Home() {
           </div>
 
           <Search />
-          <Nav />
+          <Nav setActiveFilter={setActiveFilter} />
 
           <div className="absolute bottom-0 w-full">
             <AddNewTask addTask={addTask} />
@@ -49,8 +77,14 @@ export default function Home() {
 
       <section className="h-screen w-full overflow-auto">
         <div className="grid w-full grid-cols-5 gap-5 p-5">
-          {tasks.map((task) => (
-            <Task key={task.id} content={task.content} />
+          {filteredTasks.map((task) => (
+            <Task
+              key={task.id}
+              id={task.id}
+              content={task.content}
+              important={task.important}
+              updateTask={updateTask}
+            />
           ))}
         </div>
       </section>
