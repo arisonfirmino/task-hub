@@ -17,6 +17,7 @@ export default function Home() {
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
   const [activeFilter, setActiveFilter] = useState("Tudo");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const storedTasks = localStorage.getItem("tasks");
@@ -27,14 +28,22 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (activeFilter === "Tudo") {
-      setFilteredTasks(tasks);
-    } else if (activeFilter === "Importante") {
-      const importantTasks = tasks.filter((task) => task.important);
-      setFilteredTasks(importantTasks);
-    } else if (activeFilter === "Lixeira") {
+    let updatedTasks = tasks;
+    if (activeFilter === "Importante") {
+      updatedTasks = tasks.filter((task) => task.important);
     }
+    setFilteredTasks(updatedTasks);
   }, [activeFilter, tasks]);
+
+  useEffect(() => {
+    let updatedTasks = tasks;
+    if (searchTerm) {
+      updatedTasks = tasks.filter((task) =>
+        task.content.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+    }
+    setFilteredTasks(updatedTasks);
+  }, [searchTerm, tasks]);
 
   const addTask = (newTask: string) => {
     const newId = Math.random().toString(36).substr(2, 9);
@@ -66,7 +75,7 @@ export default function Home() {
             <h2 className="text-xl font-medium">TaskHub</h2>
           </div>
 
-          <Search />
+          <Search setSearchTerm={setSearchTerm} />
           <Nav setActiveFilter={setActiveFilter} />
 
           <div className="absolute bottom-0 w-full">
