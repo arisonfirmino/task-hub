@@ -30,13 +30,21 @@ export default function Home() {
 
   useEffect(() => {
     let updatedTasks = tasks.filter((task) => !task.isTrashed);
+
+    if (searchTerm.trim() !== "") {
+      updatedTasks = updatedTasks.filter((task) =>
+        task.content.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+    }
+
     if (activeFilter === "Importante") {
       updatedTasks = updatedTasks.filter((task) => task.important);
     } else if (activeFilter === "Lixeira") {
       updatedTasks = tasks.filter((task) => task.isTrashed);
     }
+
     setFilteredTasks(updatedTasks);
-  }, [activeFilter, tasks]);
+  }, [activeFilter, searchTerm, tasks]);
 
   const addTask = useCallback(
     (newTask: string) => {
