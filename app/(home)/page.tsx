@@ -19,16 +19,9 @@ export default function Home() {
   const [filter, setFilter] = useState("Tudo");
   console.log(tasks);
 
-  const addTask = (newTask: Task) => {
-    if (newTask.important) {
-      newTask = { ...newTask, important: true };
-    }
-    setTasks([...tasks, newTask]);
-  };
-
   const filteredTasks = tasks.filter((task) => {
     if (filter === "Tudo") {
-      return true;
+      return !task.inTrash;
     } else if (filter === "Importantes") {
       return task.important;
     } else if (filter === "Concluidas") {
@@ -38,6 +31,18 @@ export default function Home() {
     }
     return true;
   });
+
+  const addTask = (newTask: Task) => {
+    if (newTask.important) {
+      newTask = { ...newTask, important: true };
+    }
+    setTasks([...tasks, newTask]);
+  };
+
+  const deleteTask = (taskId: string) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+  };
 
   return (
     <Container>
@@ -55,6 +60,7 @@ export default function Home() {
                 );
                 setTasks(updatedTasks);
               }}
+              deleteTask={deleteTask}
             />
           ))}
         </div>
