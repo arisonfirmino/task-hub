@@ -16,25 +16,45 @@ export interface Task {
 
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [filter, setFilter] = useState("Tudo");
   console.log(tasks);
 
   const addTask = (newTask: Task) => {
+    if (newTask.important) {
+      newTask = { ...newTask, important: true };
+    }
     setTasks([...tasks, newTask]);
   };
 
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === "Tudo") {
+      return true;
+    } else if (filter === "Importantes") {
+      return task.important;
+    } else if (filter === "Concluidas") {
+      return task.completed;
+    } else if (filter === "Lixeira") {
+      return task.inTrash;
+    }
+    return true;
+  });
+
   return (
     <Container>
-      <SideMenu addTask={addTask} />
+      <SideMenu addTask={addTask} setFilter={setFilter} />
 
       <section className="h-full w-full overflow-auto">
         <div className="grid grid-cols-2 gap-5 p-5 md:grid-cols-3 xl:grid-cols-5">
-          {tasks.map((task) => (
+          {filteredTasks.map((task) => (
             <Task
               key={task.id}
-              text={task.task}
-              important={task.important}
-              completed={task.completed}
-              created_at={task.created_at}
+              task={task}
+              updateTask={(updatedTask: Task) => {
+                const updatedTasks = tasks.map((t) =>
+                  t.id === updatedTask.id ? updatedTask : t,
+                );
+                setTasks(updatedTasks);
+              }}
             />
           ))}
         </div>

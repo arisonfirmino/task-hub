@@ -8,7 +8,11 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
-export default function Nav() {
+interface NavProps {
+  setFilter: (filter: string) => void;
+}
+
+export default function Nav({ setFilter }: NavProps) {
   const [active, setActive] = useState("Tudo");
 
   const navItems = [
@@ -23,7 +27,10 @@ export default function Nav() {
       {navItems.map((item, index) => (
         <button
           key={index}
-          onClick={() => setActive(item.text)}
+          onClick={() => {
+            setActive(item.text);
+            setFilter(item.text);
+          }}
           className={`flex items-center gap-2 rounded-xl p-2.5 text-lg ${active === item.text ? "bg-gray-100" : ""}`}
         >
           <span className="text-blue-500">{item.icon}</span>

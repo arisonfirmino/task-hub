@@ -1,4 +1,3 @@
-import { ListTodoIcon } from "lucide-react";
 import Search from "./search";
 import Nav from "./nav";
 import Form from "./form";
@@ -7,9 +6,10 @@ import Image from "next/image";
 
 interface SideMenuProps {
   addTask: (newTask: Task) => void;
+  setFilter: (filter: string) => void;
 }
 
-export default function SideMenu({ addTask }: SideMenuProps) {
+export default function SideMenu({ addTask, setFilter }: SideMenuProps) {
   return (
     <div className="flex h-fit w-full flex-col gap-5 p-5 shadow-md xl:h-full xl:min-w-80 xl:max-w-80 xl:shadow-2xl">
       <div className="flex items-center gap-2.5 text-blue-500">
@@ -24,7 +24,7 @@ export default function SideMenu({ addTask }: SideMenuProps) {
       </div>
 
       <Search />
-      <Nav />
+      <Nav setFilter={setFilter} />
 
       <Form addTask={addTask} />
     </div>
