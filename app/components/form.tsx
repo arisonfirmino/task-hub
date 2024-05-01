@@ -3,12 +3,19 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { v4 as uuidv4 } from "uuid";
+import { format } from "date-fns";
+import { Task } from "../(home)/page";
+
+interface FormProps {
+  addTask: (newTask: Task) => void;
+}
 
 const schema = yup.object({
   task: yup.string().required(),
 });
 
-export default function Form() {
+export default function Form({ addTask }: FormProps) {
   const {
     register,
     handleSubmit,
@@ -19,7 +26,16 @@ export default function Form() {
   });
 
   const onSubmit = (data: { task: string }) => {
-    console.log(data);
+    const newTask = {
+      id: uuidv4(),
+      task: data.task,
+      important: false,
+      completed: false,
+      inTrash: false,
+      created_at: format(new Date(), "dd/MM/yyyy"),
+    };
+
+    addTask(newTask);
     reset();
   };
 
