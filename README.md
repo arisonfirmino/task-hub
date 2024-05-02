@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TaskHub
 
-## Getting Started
+TaskHub é uma aplicação web simples feita com Next.js e TypeScript para ajudar na organização de tarefas. O objetivo principal foi criar uma aplicação que permita adicionar, editar, visualizar e excluir tarefas (CRUD) de forma fácil. A interface é projetada para ser amigável, com menus e botões que facilitam a navegação.
 
-First, run the development server:
+👉 [acesse a aplicação](https://task-hub-six.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Preview](https://utfs.io/f/64c7fe63-99a6-4e7b-afbf-0c940a31fe1b-r2tqvc.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação está dividida em duas partes principais: um tipo de menu lateral e uma área principal de visualização das tarefas. O menu lateral possui uma barra de pesquisa que permite encontrar tarefas rapidamente. Além disso, há quatro botões de filtro para organizar as tarefas por categoria: 'Todas', 'Importantes', 'Concluídas' e 'Lixeira'. O botão 'Lixeira' é especialmente útil para recuperar tarefas recentemente excluídas ou excluí-las permanentemente. Dentro do menu lateral também é onde se encontra o formulário usado para adicionar uma nova tarefa na aplicação.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Cada tarefa na aplicação possui três botões de interação individual.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Um botão que permite marcar a tarefa como importante. Quando uma tarefa é marcada como importante, suas bordas mudam para um tom de amarelo, proporcionando um sinal visual claro de sua importância. Essa abordagem torna fácil identificar as tarefas prioritárias em meio a outras.
 
-## Learn More
+Outro botão disponível é um que indica que a tarefa foi concluída. Ao marcá-la como tal, o ícone de conclusão é alterado para um tom de verde e uma linha é adicionada sobre o texto da tarefa. Essa mudança visual clara indica que a tarefa foi concluída com sucesso, o que facilita o progresso das atividades.
 
-To learn more about Next.js, take a look at the following resources:
+Há também um botão com o ícone de uma lixeira, que ao ser clicado envia a tarefa para a lixeira. Dentro da lixeira, as tarefas são exibidas com dois outros botões. Um desses botões possibilita que o usuário recupere a tarefa para a lista principal, enquanto o outro, também com o ícone de uma lixeira, remove a tarefa permanentemente da aplicação.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Para garantir a permanecia das tarefas mesmo se o usuário fechar a aplicação e, retornar mais tarde por exemplo, como é uma aplicação simples do frontend optei por uma solução prática que foi armazenar as tarefas no localStorage do navegador.
