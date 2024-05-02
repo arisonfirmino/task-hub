@@ -7,9 +7,14 @@ import Image from "next/image";
 interface SideMenuProps {
   addTask: (newTask: Task) => void;
   setFilter: (filter: string) => void;
+  handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function SideMenu({ addTask, setFilter }: SideMenuProps) {
+export default function SideMenu({
+  addTask,
+  setFilter,
+  handleSearch,
+}: SideMenuProps) {
   return (
     <div className="flex h-fit w-full flex-col gap-5 p-5 shadow-md xl:h-full xl:min-w-80 xl:max-w-80 xl:shadow-2xl">
       <div className="flex items-center gap-2.5 text-blue-500">
@@ -23,7 +28,7 @@ export default function SideMenu({ addTask, setFilter }: SideMenuProps) {
         <h3 className="text-xl font-medium">TaskHub</h3>
       </div>
 
-      <Search />
+      <Search handleSearch={handleSearch} />
       <Nav setFilter={setFilter} />
 
       <Form addTask={addTask} />

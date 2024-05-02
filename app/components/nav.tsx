@@ -18,7 +18,7 @@ export default function Nav({ setFilter }: NavProps) {
   const navItems = [
     { text: "Tudo", icon: <LayoutGridIcon size={18} /> },
     { text: "Importantes", icon: <CircleAlertIcon size={18} /> },
-    { text: "Concluidas", icon: <SquareCheckBigIcon size={18} /> },
+    { text: "Concluídas", icon: <SquareCheckBigIcon size={18} /> },
     { text: "Lixeira", icon: <Trash2Icon size={18} /> },
   ];
 

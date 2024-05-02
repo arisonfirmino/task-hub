@@ -34,14 +34,14 @@ export default function Task({
 
   return (
     <div
-      className={`rounded-xl border border-solid p-2.5 duration-500 xl:hover:scale-105 ${isImportant ? "border-yellow-400" : "border-blue-500"} ${task.inTrash ? "border-red-600" : "border-blue-500"}`}
+      className={`rounded-xl border border-solid p-2.5 duration-500 xl:hover:scale-105 ${task.important ? "border-yellow-400" : "border-blue-500"} ${task.inTrash ? "border-red-600" : "border-blue-500"}`}
     >
       <p className="text-end text-xs font-light text-gray-400">
         {task.created_at}
       </p>
 
       <p
-        className={`overflow-hidden text-ellipsis text-nowrap text-lg ${isCompleted ? "text-gray-400 line-through" : ""}`}
+        className={`overflow-hidden text-ellipsis text-nowrap text-lg ${task.completed ? "text-gray-400 line-through" : ""}`}
       >
         {task.task}
       </p>
@@ -69,7 +69,7 @@ export default function Task({
               setIsImportant(!isImportant);
               updateTask({ ...task, important: !isImportant });
             }}
-            className={`rounded bg-gray-100 p-1 ${isImportant ? "text-yellow-400" : "text-gray-600"}`}
+            className={`rounded bg-gray-100 p-1 ${task.important ? "text-yellow-400" : "text-gray-600"}`}
           >
             <CircleAlertIcon size={16} />
           </button>
@@ -79,9 +79,9 @@ export default function Task({
               setIsCompleted(!isCompleted);
               updateTask({ ...task, completed: !isCompleted });
             }}
-            className={`rounded bg-gray-100 p-1 ${isCompleted ? "text-green-500" : "text-gray-600"}`}
+            className={`rounded bg-gray-100 p-1 ${task.completed ? "text-green-500" : "text-gray-600"}`}
           >
-            {isCompleted ? (
+            {task.completed ? (
               <CheckCheckIcon size={16} />
             ) : (
               <CheckIcon size={16} />

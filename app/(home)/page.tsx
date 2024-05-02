@@ -17,6 +17,7 @@ export interface Task {
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState("Tudo");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const storedTasks = localStorage.getItem("tasks");
@@ -31,13 +32,25 @@ export default function Home() {
 
   const filteredTasks = tasks.filter((task) => {
     if (filter === "Tudo") {
-      return !task.inTrash;
+      return (
+        !task.inTrash &&
+        task.task.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     } else if (filter === "Importantes") {
-      return task.important;
-    } else if (filter === "Concluidas") {
-      return task.completed;
+      return (
+        task.important &&
+        task.task.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    } else if (filter === "Concluídas") {
+      return (
+        task.completed &&
+        task.task.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     } else if (filter === "Lixeira") {
-      return task.inTrash;
+      return (
+        task.inTrash &&
+        task.task.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
     return true;
   });
@@ -54,9 +67,17 @@ export default function Home() {
     setTasks(updatedTasks);
   };
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <Container>
-      <SideMenu addTask={addTask} setFilter={setFilter} />
+      <SideMenu
+        addTask={addTask}
+        setFilter={setFilter}
+        handleSearch={handleSearch}
+      />
 
       <section className="h-full w-full overflow-auto">
         <div className="grid grid-cols-2 gap-5 p-5 md:grid-cols-3 xl:grid-cols-5">
