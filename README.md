@@ -4,7 +4,7 @@ TaskHub é uma aplicação web simples feita com Next.js e TypeScript para ajuda
 
 👉 [acesse a aplicação](https://task-hub-six.vercel.app/)
 
-![Preview](https://utfs.io/f/64c7fe63-99a6-4e7b-afbf-0c940a31fe1b-r2tqvc.png)
+![Preview](https://utfs.io/f/f5224ef8-a415-485f-934b-aaeb030e8bcf-r2tqvc.png)
 
 A aplicação está dividida em duas partes principais: um tipo de menu lateral e uma área principal de visualização das tarefas. O menu lateral possui uma barra de pesquisa que permite encontrar tarefas rapidamente. Além disso, há quatro botões de filtro para organizar as tarefas por categoria: 'Todas', 'Importantes', 'Concluídas' e 'Lixeira'. O botão 'Lixeira' é especialmente útil para recuperar tarefas recentemente excluídas ou excluí-las permanentemente. Dentro do menu lateral também é onde se encontra o formulário usado para adicionar uma nova tarefa na aplicação.
 
