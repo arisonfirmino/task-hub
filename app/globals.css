@@ -7,3 +7,13 @@
 * {
   font-family: "Roboto", sans-serif;
 }
+
+::-webkit-scrollbar {
+  background: #ffffff;
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 5px;
+}

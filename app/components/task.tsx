@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   CheckCheckIcon,
   CheckIcon,
@@ -33,7 +34,10 @@ export default function Task({
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
       className={`rounded-xl border border-solid p-2.5 duration-500 xl:hover:scale-105 ${task.important ? "border-yellow-400" : "border-blue-500"} ${task.inTrash ? "border-red-600" : "border-blue-500"}`}
     >
       <p className="text-end text-xs font-light text-gray-400">
@@ -98,6 +102,6 @@ export default function Task({
           </button>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
